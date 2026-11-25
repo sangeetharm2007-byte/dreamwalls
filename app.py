@@ -21,8 +21,17 @@ def home():
 
 @app.route("/api/wallpapers")
 def get_wallpapers():
-    category = request.args.get("category", "nature")
+    category = request.args.get("category", "")
+    search = request.args.get("search", "")
     page = request.args.get("page", 1)
+    sort = request.args.get("sort", "popular")
+
+    if search:
+        query = search
+    elif category:
+        query = category
+    else:
+        query = "nature"
 
     if not PIXABAY_API_KEY:
         return jsonify({"error": "Pixabay API key is missing."}), 500
@@ -32,18 +41,35 @@ def get_wallpapers():
             "https://pixabay.com/api/",
             params={
                 "key": PIXABAY_API_KEY,
-                "q": category,
+                "q": query,
                 "image_type": "photo",
                 "orientation": "vertical",
                 "safesearch": "true",
-                "per_page": 30,
-                "page": page
+                "per_page": 24,
+                "page": page,
             },
             timeout=20
         )
 
         response.raise_for_status()
-        return jsonify(response.json())
+        data = response.json()
+
+        wallpapers = []
+
+        for hit in data.get("hits", []):
+            wallpapers.append({
+                "id": hit["id"],
+                "title": hit.get("tags", "Wallpaper"),
+                "preview": hit.get("webformatURL", ""),
+                "full_image": hit.get("largeImageURL", ""),
+                "width": hit.get("imageWidth", 0),
+                "height": hit.get("imageHeight", 0)
+            })
+
+        return jsonify({
+            "wallpapers": wallpapers,
+            "total": data.get("totalHits", 0)
+        })
 
     except requests.exceptions.RequestException as e:
         return jsonify({
