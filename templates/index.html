@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DreamWalls - Your Wallpaper World</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">Dream<span>Walls.</span></a>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#gallery">Explore</a>
+        <a href="#favorites">Favourites</a>
+    </nav>
+
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+        🌙
+    </button>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="tag">✨ YOUR WORLD OF WALLPAPERS</span>
+
+        <h1>Find Your Perfect <span>Wallpaper</span></h1>
+
+        <p>
+            Discover beautiful backgrounds, dreamy aesthetics
+            and stunning pictures for your devices.
+        </p>
+
+        <div class="search-box">
+            <input type="text" id="searchInput"
+                   placeholder="Search wallpapers, cars, nature, anime...">
+
+            <button id="searchBtn">Search 🔍</button>
+        </div>
+
+        <div class="hero-tags">
+            <span>#Aesthetic</span>
+            <span>#Nature</span>
+            <span>#Cars</span>
+            <span>#Anime</span>
+        </div>
+    </div>
+</section>
+
+<section class="categories-section" id="categories">
+
+    <div class="section-heading">
+        <div>
+            <span class="small-title">EXPLORE YOUR STYLE</span>
+            <h2>Wallpaper Categories</h2>
+        </div>
+    </div>
+
+    <div class="category-grid">
+
+        <button class="category-card active" data-category="all">
+            <span>🌈</span> All Wallpapers
+        </button>
+
+        <button class="category-card" data-category="god">
+            <span>🙏</span> God
+        </button>
+
+        <button class="category-card" data-category="barbie">
+            <span>🎀</span> Barbie
+        </button>
+
+        <button class="category-card" data-category="car">
+            <span>🚘</span> Cars
+        </button>
+
+        <button class="category-card" data-category="bike">
+            <span>🏍️</span> Bikes
+        </button>
+
+        <button class="category-card" data-category="nature">
+            <span>🌿</span> Nature
+        </button>
+
+        <button class="category-card" data-category="anime">
+            <span>🌸</span> Anime
+        </button>
+
+        <button class="category-card" data-category="cute">
+            <span>🧸</span> Cute
+        </button>
+
+        <button class="category-card" data-category="love">
+            <span>❤️</span> Love
+        </button>
+
+        <button class="category-card" data-category="aesthetic">
+            <span>🦋</span> Aesthetic
+        </button>
+
+        <button class="category-card" data-category="gaming">
+            <span>🎮</span> Gaming
+        </button>
+
+        <button class="category-card" data-category="3d">
+            <span>💎</span> 3D Art
+        </button>
+
+        <button class="category-card" data-category="space">
+            <span>🌌</span> Space
+        </button>
+
+    </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+
+    <div class="section-heading gallery-heading">
+        <div>
+            <span class="small-title">FIND SOMETHING BEAUTIFUL</span>
+            <h2 id="galleryTitle">Explore Wallpapers</h2>
+            <p id="resultCount">Discover your next favourite background.</p>
+        </div>
+
+        <select id="sortSelect">
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest</option>
+        </select>
+    </div>
+
+    <div id="wallpaperGrid" class="wallpaper-grid">
+        <div class="loading">Loading beautiful wallpapers... ✨</div>
+    </div>
+
+    <p id="errorMessage" class="error-message"></p>
+
+    <button id="loadMoreBtn" class="load-more">
+        Load More Wallpapers
+    </button>
+
+</section>
+
+<section class="gallery-section" id="favorites">
+
+    <div class="section-heading">
+        <div>
+            <span class="small-title">YOUR COLLECTION</span>
+            <h2>❤️ Your Favourite Wallpapers</h2>
+        </div>
+    </div>
+
+    <div id="favoriteGrid" class="wallpaper-grid">
+        <p class="empty-message">Your favourite wallpapers will appear here.</p>
+    </div>
+
+</section>
+
+<section class="gallery-section recent-section" id="recent">
+
+    <div class="section-heading">
+        <div>
+            <span class="small-title">YOUR HISTORY</span>
+            <h2>Recently Viewed</h2>
+        </div>
+    </div>
+
+    <div id="recentGrid" class="wallpaper-grid">
+        <p class="empty-message">You haven't viewed any wallpapers yet.</p>
+    </div>
+
+</section>
+
+<footer>
+    <h2>Dream<span>Walls.</span></h2>
+    <p>Make your screen a little more beautiful. 💗</p>
+    <p>© 2026 DreamWalls. All rights reserved.</p>
+</footer>
+
+<!-- Full image preview -->
+<div id="previewModal" class="modal">
+
+    <div class="modal-content">
+        <button id="closeModal" class="close-modal">×</button>
+
+        <img id="previewImage" src="" alt="Wallpaper preview">
+
+        <h3 id="previewTitle">Wallpaper</h3>
+
+        <p id="previewDimensions"></p>
+
+        <button id="previewDownload" class="download-btn">
+            ⬇ Download Wallpaper
+        </button>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
